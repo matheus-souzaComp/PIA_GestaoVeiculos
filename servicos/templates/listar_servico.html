@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'veiculos/css/veiculos.css' %}">
+    <link rel="stylesheet" href="{% static 'servicos/css/listar_servico.css' %}">
+    
+{% endblock %}
+
+
+{% block 'dashboard' %}
+    <br>
+    <br>
+    <div class="container-fluid distanciamento">
+        <table class="table table-dark">
+        <thead>
+            <tr>
+            <th scope="col">Identificador</th>
+            <th scope="col">Título</th>
+            <th scope="col">Motorista</th>
+            <th scope="col">Veículo</th>
+            <th scope="col">Operação</th>
+            <th scope="col">Hora início</th>
+            <th scope="col">Hora fim</th>
+            <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for servico in servicos %}
+                <tr>
+                    <th><a href="{% url 'servico' servico.identificador %}">{{servico.identificador}}</a></th>
+                    <td>{{servico.titulo}}</td>
+                    <td>{{servico.motorista}}</td>
+                    <td>{{servico.veiculo}}</td>
+                    <td>{{servico.operacao}}</td>
+                    <td>{{servico.hora_inicio}}</td>
+                    <td>{{servico.hora_fim}}</td>
+                    <td>
+                        {% if servico.finalizado %}
+                            <span class="badge badge-success">Finalizado</span>
+                        {% else %}
+                            <span class="badge badge-info">Em operação</span>
+                        {% endif %}
+                        
+                        </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock %}

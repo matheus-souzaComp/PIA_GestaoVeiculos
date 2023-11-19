@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'motoristas/css/motoristas.css' %}">
+{% endblock %}
+
+{% block 'dashboard' %}
+<div class="container">
+    <div class="row">
+
+        <div onclick="exibir_form_motorista('1')" class="col-md card-dashboard">
+            <p class="text-card">Adicionar motorista</p>
+        </div>
+
+        <div onclick="exibir_form_motorista('2')" class="col-md card-dashboard">
+            <p class="text-card">Atualizar motorista</p>
+        </div>
+
+    </div>
+
+    <div id="adicionar-motorista" class="adicionar-motorista">
+        <form action="{% url 'motoristas' %}" method="POST">{% csrf_token %}
+        
+            <p>Nome:</p>
+            <input type="text" class="form-control" placeholder="Primeiro nome" name="nome">
+            <p>Sobrenome:</p>
+            <input type="text" class="form-control" placeholder="Sobrenome" name="sobrenome">
+            <br>
+            <p>E-mail:</p>
+            <input type="email" class="form-control" placeholder="nome@email.com" name="email">
+            <br>
+            <p>CPF:</p>
+            <input type="text" class="form-control" placeholder="___.___.___-__" name="cpf">
+            <hr style="background-color:gray;">
+            <br>
+            <input type="submit" value="Cadastrar" class="btn-principal">
+
+        </form>
+ </div>
+
+    <div id="att_motorista">
+        <p></p>
+        <select id="motorista-select" onchange="dados_motorista()" class="form-control">
+            {% for motorista in motoristas %}
+            <option value="{{motorista.id}}">{{motorista.nome}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <hr>
+
+            <div id="form-att-motorista">
+                <input type="hidden" id="id">
+                <p>Primeiro Nome:</p>
+                <input id="nome" type="text" class='form-control'>
+                <p>Sobrenome:</p>
+                <input id="sobrenome" type="text" class='form-control'>
+                <p>E-mail:</p>
+                <input id="email" type="text" class='form-control'>
+                <p>CPF:</p>
+                <input id="cpf" type="text" class='form-control'>
+                <br>
+                <input onclick="update_motorista()" type="submit" value="salvar" class="btn btn-success">
+                <hr style="background-color: gray;">
+            </div>
+
+    </div>
+
+
+
+</div>
+
+<script src="{% static 'motoristas/js/motoristas.js' %}"></script>
+{% endblock %}
